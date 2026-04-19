@@ -16,4 +16,5 @@ data class Category(
     val color: ColorInt,
     val icon: IconAsset?,
     override val orderNum: Double,
+    val isArchived: Boolean = false,
 ) : Identifiable<CategoryId>, Reorderable

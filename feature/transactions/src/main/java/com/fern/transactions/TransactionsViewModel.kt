@@ -312,6 +312,7 @@ class TransactionsViewModel @Inject constructor(
                 event.newBalance
             )
 
+            is TransactionsEvent.ToggleArchiveCategory -> toggleArchiveCategory(event.category)
             is TransactionsEvent.EditCategory -> editCategory(event.updatedCategory)
             is TransactionsEvent.NextMonth -> nextMonth(event.screen)
             is TransactionsEvent.PayOrGet -> payOrGet(event.screen, event.transaction)
@@ -749,6 +750,15 @@ class TransactionsViewModel @Inject constructor(
             categoryRepository.deleteById(CategoryId(categoryId))
 
             nav.back()
+        }
+    }
+
+    private fun toggleArchiveCategory(category: Category) {
+        viewModelScope.launch {
+            val updatedCategory = category.copy(isArchived = !category.isArchived)
+            categoryCreator.editCategory(updatedCategory) {
+                this@TransactionsViewModel.category.value = it
+            }
         }
     }
 

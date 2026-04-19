@@ -101,7 +101,7 @@ fun BoxWithConstraintsScope.ChooseCategoryModal(
         Spacer(Modifier.height(24.dp))
 
         CategoryPicker(
-            categories = categories,
+            categories = categories.filter { !it.isArchived || it.id == initialCategory?.id },
             selectedCategory = selectedCategory,
             showCategoryModal = showCategoryModal,
             onEditCategory = {
@@ -244,13 +244,13 @@ private fun CategoryButton(
         )
 
         if (selected) {
-            val deselectBtnBackground = findContrastTextColor(categoryColor)
+            val dSelectedBtnBackground = findContrastTextColor(categoryColor)
             IvyCircleButton(
                 modifier = Modifier
                     .size(32.dp),
                 icon = R.drawable.ic_remove,
-                backgroundGradient = Gradient.solid(deselectBtnBackground),
-                tint = findContrastTextColor(deselectBtnBackground)
+                backgroundGradient = Gradient.solid(dSelectedBtnBackground),
+                tint = findContrastTextColor(dSelectedBtnBackground)
             ) {
                 onDeselect()
             }

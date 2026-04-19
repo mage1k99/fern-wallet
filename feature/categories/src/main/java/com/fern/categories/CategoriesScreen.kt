@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -52,6 +53,7 @@ import com.fern.data.model.primitive.IconAsset
 import com.fern.data.model.primitive.NotBlankTrimmedString
 import com.fern.design.l0_system.UI
 import com.fern.design.l0_system.style
+import com.fern.design.utils.thenIf
 import com.fern.legacy.ui.SearchInput
 import com.fern.legacy.utils.balancePrefix
 import com.fern.legacy.utils.compactBalancePrefix
@@ -263,17 +265,23 @@ private fun CategoryCard(
 ) {
     val contrastColor = findContrastTextColor(categoryData.category.color.value.toComposeColor())
 
-    if (!compactModeEnabled) {
-        Spacer(Modifier.height(16.dp))
-        DefaultCategoryCard(onClick, categoryData, currency)
-    } else {
-        Spacer(Modifier.height(8.dp))
-        CompactCategoryCard(
-            categoryData = categoryData,
-            contrastColor = contrastColor,
-            currency = currency,
-            onClick = onClick
-        )
+    val modifier = Modifier.thenIf(categoryData.category.isArchived) {
+        alpha(0.5f)
+    }
+
+    Box(modifier = modifier) {
+        if (!compactModeEnabled) {
+            Spacer(Modifier.height(16.dp))
+            DefaultCategoryCard(onClick, categoryData, currency)
+        } else {
+            Spacer(Modifier.height(8.dp))
+            CompactCategoryCard(
+                categoryData = categoryData,
+                contrastColor = contrastColor,
+                currency = currency,
+                onClick = onClick
+            )
+        }
     }
 }
 
@@ -345,11 +353,18 @@ private fun CompactCategoryCard(
                     .background(category.color.value.toComposeColor()),
                 contentAlignment = Alignment.Center,
             ) {
-                ItemIconSDefaultIcon(
-                    iconName = category.icon?.id,
-                    defaultIcon = R.drawable.ic_custom_account_s,
-                    tint = contrastColor
-                )
+                if (category.isArchived) {
+                    IvyIcon(
+                        icon = R.drawable.ic_hide_m,
+                        tint = contrastColor
+                    )
+                } else {
+                    ItemIconSDefaultIcon(
+                        iconName = category.icon?.id,
+                        defaultIcon = R.drawable.ic_custom_account_s,
+                        tint = contrastColor
+                    )
+                }
             }
 
             Row(
@@ -521,11 +536,18 @@ private fun CategoryHeader(
         ) {
             Spacer(Modifier.width(20.dp))
 
-            ItemIconSDefaultIcon(
-                iconName = category.icon?.id,
-                defaultIcon = R.drawable.ic_custom_category_s,
-                tint = contrastColor
-            )
+            if (category.isArchived) {
+                IvyIcon(
+                    icon = R.drawable.ic_hide_m,
+                    tint = contrastColor
+                )
+            } else {
+                ItemIconSDefaultIcon(
+                    iconName = category.icon?.id,
+                    defaultIcon = R.drawable.ic_custom_category_s,
+                    tint = contrastColor
+                )
+            }
 
             Spacer(Modifier.width(8.dp))
 

@@ -14,6 +14,7 @@ import com.fern.base.legacy.stringRes
 import com.fern.navigation.navigation
 import com.fern.ui.R
 import com.fern.wallet.ui.theme.Transparent
+import com.fern.wallet.ui.theme.components.ArchiveButton
 import com.fern.wallet.ui.theme.components.CircleButton
 import com.fern.wallet.ui.theme.components.DeleteButton
 import com.fern.wallet.ui.theme.components.IvyOutlinedButton
@@ -26,6 +27,9 @@ fun ItemStatisticToolbar(
     onEdit: () -> Unit,
     showEditButton: Boolean = true,
     showDeleteButton: Boolean = true,
+    showArchiveButton: Boolean = false,
+    isArchived: Boolean = false,
+    onArchive: () -> Unit = {},
     onDelete: () -> Unit,
 ) {
     Row(
@@ -60,6 +64,13 @@ fun ItemStatisticToolbar(
         }
 
         Spacer(Modifier.width(16.dp))
+
+        if (showArchiveButton) {
+            ArchiveButton(isArchived = isArchived) {
+                onArchive()
+            }
+            Spacer(Modifier.width(16.dp))
+        }
 
         if (showDeleteButton) {
             DeleteButton {

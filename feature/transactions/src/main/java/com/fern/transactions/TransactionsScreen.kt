@@ -172,6 +172,9 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onDelete = {
             viewModel.onEvent(TransactionsEvent.Delete(screen))
         },
+        onToggleArchiveCategory = {
+            viewModel.onEvent(TransactionsEvent.ToggleArchiveCategory(it))
+        },
         onEditCategory = {
             viewModel.onEvent(TransactionsEvent.EditCategory(it))
         },
@@ -239,6 +242,7 @@ private fun BoxWithConstraintsScope.UI(
     onSetPeriod: (TimePeriod) -> Unit,
     onEditAccount: (Account, Double) -> Unit,
     onEditCategory: (Category) -> Unit,
+    onToggleArchiveCategory: (Category) -> Unit,
     onDelete: () -> Unit,
     deleteModal1Visible: Boolean,
     onDeleteModal1Visible: (Boolean) -> Unit,
@@ -321,6 +325,11 @@ private fun BoxWithConstraintsScope.UI(
 
                     onDelete = {
                         onDeleteModal1Visible(true)
+                    },
+                    onArchive = {
+                        if (category != null) {
+                            onToggleArchiveCategory(category)
+                        }
                     },
                     onEdit = {
                         when {
@@ -599,6 +608,7 @@ private fun Header(
     expenses: Double,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
+    onArchive: () -> Unit,
 
     onBalanceClick: () -> Unit,
     showCategoryModal: () -> Unit,
@@ -622,6 +632,9 @@ private fun Header(
             contrastColor = contrastColor,
             onEdit = onEdit,
             onDelete = onDelete,
+            onArchive = onArchive,
+            showArchiveButton = category != null,
+            isArchived = category?.isArchived ?: false,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,
             showDeleteButton = hideEditAndDeleteButtonForAccountTransfer,
         )
@@ -686,7 +699,7 @@ private fun Header(
             income = income,
             expenses = expenses,
 
-            hasAddButtons = true,
+            hasAddButtons = category?.isArchived != true,
 
             itemColor = itemColor,
             incomeHeaderCardClicked = {
@@ -785,7 +798,7 @@ private fun Item(
 
             category != null -> {
                 ItemIconMDefaultIcon(
-                    iconName = category.icon?.id,
+                    iconName = if (category.isArchived) "hide" else category.icon?.id,
                     defaultIcon = R.drawable.ic_custom_category_m,
                     tint = contrastColor
                 )
@@ -849,6 +862,7 @@ private fun BoxWithConstraintsScope.Preview_empty() {
             onPreviousMonth = {},
             onNextMonth = {},
             onDelete = {},
+            onToggleArchiveCategory = {},
             onEditAccount = { _, _ -> },
             onEditCategory = {},
             updateAccountNameConfirmation = {},
@@ -896,6 +910,7 @@ private fun BoxWithConstraintsScope.Preview_crypto() {
             onPreviousMonth = {},
             onNextMonth = {},
             onDelete = {},
+            onToggleArchiveCategory = {},
             onEditAccount = { _, _ -> },
             onEditCategory = {},
             updateAccountNameConfirmation = {},
@@ -936,6 +951,7 @@ private fun BoxWithConstraintsScope.Preview_empty_upcoming() {
             onPreviousMonth = {},
             onNextMonth = {},
             onDelete = {},
+            onToggleArchiveCategory = {},
             onEditAccount = { _, _ -> },
             onEditCategory = {},
             upcoming = persistentListOf(
