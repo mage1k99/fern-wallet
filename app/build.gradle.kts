@@ -12,11 +12,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ivy.wallet"
+    namespace = "com.fern.wallet"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.ivy.wallet"
+        applicationId = "com.fern.wallet"
         minSdk = libs.versions.min.sdk.get().toInt()
         targetSdk = libs.versions.compile.sdk.get().toInt()
         versionName = libs.versions.version.name.get()
@@ -30,9 +30,9 @@ android {
     signingConfigs {
         getByName("debug") {
             storeFile = file("../debug.jks")
-            storePassword = "IVY7834!DEbug"
+            storePassword = "FERN1337"
             keyAlias = "debug"
-            keyPassword = "IVY7834!DEbug"
+            keyPassword = "FERN1337"
         }
 
         create("release") {
@@ -69,7 +69,6 @@ android {
 
             signingConfig = signingConfigs.getByName("debug")
 
-            applicationIdSuffix = ".debug"
             resValue("string", "app_name", "Fern Wallet Debug")
         }
 

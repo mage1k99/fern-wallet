@@ -36,6 +36,27 @@ Fern Wallet shines in its user interface and experience, as well as its simplici
 git clone https://github.com/mage1k99/fern-wallet.git
 ```
 
+**2. Generate Debug Keystore**
+
+To run the app locally and use Firebase features (like Google Sign-In), you need to generate a `debug.jks` file in the project root.
+
+Run the following command:
+
+```bash
+keytool -genkey -v -keystore debug.jks -storepass "FERN1337" -alias debug -keypass "FERN1337" -keyalg RSA -keysize 2048 -validity 10000 -dname "cn=Debug, ou=Dev, o=Fern, c=US"
+```
+
+*Note: If you get "Unable to locate a Java Runtime", use the keytool bundled with Android Studio:*
+`"/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin/keytool" ...`
+
+**3. Register SHA-256 in Firebase**
+
+After generating the keystore, get your SHA-256 fingerprint to add it to the Firebase Console:
+
+```bash
+keytool -list -v -keystore debug.jks -alias debug -storepass "FERN1337"
+```
+
 ## Tech Stack
 
 ### Core

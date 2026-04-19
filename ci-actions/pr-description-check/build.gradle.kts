@@ -1,10 +1,10 @@
 plugins {
-    id("ivy.script")
+    id("com.fern.script")
     application
 }
 
 application {
-    mainClass = "ivy.automate.pr.MainKt"
+    mainClass = "com.fern.automate.pr.MainKt"
 }
 
 dependencies {

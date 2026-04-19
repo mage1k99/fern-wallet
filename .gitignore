@@ -14,8 +14,12 @@
 bin/
 gen/
 out/
+app/release/
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
 # release/
+
+# Credentials
+google-services.json
 
 # Gradle files
 .gradle/
@@ -65,9 +69,8 @@ captures/
 .idea/appInsightsSettings.xml
 
 # Keystore files
-# Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+*.jks
+*.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
@@ -107,3 +110,4 @@ node_modules/*
 /.idea/AndroidProjectSystem.xml
 /.idea/runConfigurations.xml
 .idea
+/debug.jks
