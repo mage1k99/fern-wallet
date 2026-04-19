@@ -19,6 +19,7 @@ sealed interface TransactionsEvent {
     data class NextMonth(val screen: TransactionsScreen) : TransactionsEvent
     data class PreviousMonth(val screen: TransactionsScreen) : TransactionsEvent
     data class Delete(val screen: TransactionsScreen) : TransactionsEvent
+    data class ToggleArchiveCategory(val category: Category) : TransactionsEvent
     data class EditCategory(val updatedCategory: Category) : TransactionsEvent
     data class EditAccount(
         val screen: TransactionsScreen,

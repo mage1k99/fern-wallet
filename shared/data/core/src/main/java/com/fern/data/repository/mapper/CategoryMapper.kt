@@ -20,6 +20,7 @@ class CategoryMapper @Inject constructor() {
             color = ColorInt(color),
             icon = icon?.let(IconAsset::from)?.getOrNull(),
             orderNum = orderNum,
+            isArchived = isArchived,
         )
     }
 
@@ -29,6 +30,7 @@ class CategoryMapper @Inject constructor() {
             color = color.value,
             icon = icon?.id,
             orderNum = orderNum,
+            isArchived = isArchived,
             isSynced = true,
             id = id.value
         )
