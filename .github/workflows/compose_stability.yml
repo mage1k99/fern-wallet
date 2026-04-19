@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: compose-stability-report
-          path: ci-actions/compose-stability/ivy-compose-stability-report.txt
+          path: ci-actions/compose-stability/fern-compose-stability-report.txt

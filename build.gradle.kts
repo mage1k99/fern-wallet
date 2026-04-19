@@ -3,7 +3,7 @@ plugins {
     // Run with:
     // ./gradlew detekt // Simple report in the console
     // ./gradlew detektFormat // To check with enabled auto-correction
-    id("ivy.detekt")
+    id("com.fern.detekt")
     id("com.jraska.module.graph.assertion")
 
     alias(libs.plugins.gradleWrapperUpgrade)
@@ -35,7 +35,7 @@ subprojects {
 wrapperUpgrade {
     gradle {
         create("ivyWallet") {
-            repo.set("Ivy-Apps/ivy-wallet")
+            repo.set("Ivy-Apps/fern-wallet")
             baseBranch.set("main")
         }
     }

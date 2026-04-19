@@ -11,10 +11,10 @@ import ivy.automate.compose.stability.model.UnstableComposable
 import java.io.File
 import kotlin.system.exitProcess
 
-const val OutputReportFileName = "ivy-compose-stability-report.txt"
+const val OutputReportFileName = "fern-compose-stability-report.txt"
 const val ComposeReportFolderName = "compose_compiler"
 const val BaselineArg = "generateBaseline"
-const val BaselineFileName = "ivy-compose-stability-baseline.txt"
+const val BaselineFileName = "fern-compose-stability-baseline.txt"
 
 fun main(args: Array<String>) {
     val shouldGenerateBaseline = BaselineArg in args

@@ -1,9 +1,9 @@
 plugins {
-    id("ivy.feature")
+    id("com.fern.feature")
 }
 
 android {
-    namespace = "com.ivy.attributions"
+    namespace = "com.fern.attributions"
 }
 
 dependencies {
