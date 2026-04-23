@@ -45,6 +45,7 @@ import com.fern.data.db.migration.Migration127to128_PaidForDateRecord
 import com.fern.data.db.migration.Migration128to129_DeleteIsDeleted
 import com.fern.data.db.migration.Migration129to130_LoanIncludeNote
 import com.fern.data.db.migration.Migration130to131_ArchiveCategories
+import com.fern.data.db.migration.Migration131to132_ArchiveAccounts
 import com.fern.domain.db.RoomTypeConverters
 import com.fern.domain.db.migration.Migration105to106_TrnRecurringRules
 import com.fern.domain.db.migration.Migration106to107_Wishlist
@@ -79,7 +80,7 @@ import com.fern.domain.db.migration.Migration125to126_Tags
             spec = IvyRoomDatabase.DeleteSEMigration::class
         )
     ],
-    version = 131,
+    version = 132,
     exportSchema = true
 )
 @TypeConverters(RoomTypeConverters::class)
@@ -137,7 +138,8 @@ abstract class IvyRoomDatabase : RoomDatabase() {
             Migration127to128_PaidForDateRecord(),
             Migration128to129_DeleteIsDeleted(),
             Migration129to130_LoanIncludeNote(),
-            Migration130to131_ArchiveCategories()
+            Migration130to131_ArchiveCategories(),
+            Migration131to132_ArchiveAccounts()
         )
 
         @Suppress("SpreadOperator")
