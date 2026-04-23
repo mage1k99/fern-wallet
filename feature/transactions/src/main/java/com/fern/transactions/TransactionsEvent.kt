@@ -27,6 +27,8 @@ sealed interface TransactionsEvent {
         val newBalance: Double
     ) : TransactionsEvent
 
+    data class ToggleArchiveAccount(val account: Account) : TransactionsEvent
+
     data class PayOrGet(
         val screen: TransactionsScreen,
         val transaction: Transaction

@@ -175,6 +175,9 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onToggleArchiveCategory = {
             viewModel.onEvent(TransactionsEvent.ToggleArchiveCategory(it))
         },
+        onToggleArchiveAccount = {
+            viewModel.onEvent(TransactionsEvent.ToggleArchiveAccount(it))
+        },
         onEditCategory = {
             viewModel.onEvent(TransactionsEvent.EditCategory(it))
         },
@@ -241,6 +244,7 @@ private fun BoxWithConstraintsScope.UI(
     onNextMonth: () -> Unit,
     onSetPeriod: (TimePeriod) -> Unit,
     onEditAccount: (Account, Double) -> Unit,
+    onToggleArchiveAccount: (Account) -> Unit,
     onEditCategory: (Category) -> Unit,
     onToggleArchiveCategory: (Category) -> Unit,
     onDelete: () -> Unit,
@@ -326,11 +330,12 @@ private fun BoxWithConstraintsScope.UI(
                     onDelete = {
                         onDeleteModal1Visible(true)
                     },
-                    onArchive = {
-                        if (category != null) {
-                            onToggleArchiveCategory(category)
-                        }
-                    },
+                onArchive = {
+                    when {
+                        category != null -> onToggleArchiveCategory(category)
+                        account != null -> onToggleArchiveAccount(account)
+                    }
+                },
                     onEdit = {
                         when {
                             account != null -> {
@@ -633,8 +638,8 @@ private fun Header(
             onEdit = onEdit,
             onDelete = onDelete,
             onArchive = onArchive,
-            showArchiveButton = category != null,
-            isArchived = category?.isArchived ?: false,
+            showArchiveButton = category != null || account != null,
+            isArchived = category?.isArchived ?: account?.isArchived ?: false,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,
             showDeleteButton = hideEditAndDeleteButtonForAccountTransfer,
         )
@@ -769,7 +774,7 @@ private fun Item(
         when {
             account != null -> {
                 ItemIconMDefaultIcon(
-                    iconName = account.icon,
+                    iconName = if (account.isArchived) "hide" else account.icon,
                     defaultIcon = R.drawable.ic_custom_account_m,
                     tint = contrastColor
                 )
@@ -861,9 +866,10 @@ private fun BoxWithConstraintsScope.Preview_empty() {
             onSetPeriod = { },
             onPreviousMonth = {},
             onNextMonth = {},
-            onDelete = {},
-            onToggleArchiveCategory = {},
-            onEditAccount = { _, _ -> },
+        onDelete = {},
+        onToggleArchiveCategory = {},
+        onToggleArchiveAccount = {},
+        onEditAccount = { _, _ -> },
             onEditCategory = {},
             updateAccountNameConfirmation = {},
             enableDeletionButton = true,

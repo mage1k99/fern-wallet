@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -39,6 +40,7 @@ import com.fern.data.model.primitive.IconAsset
 import com.fern.data.model.primitive.NotBlankTrimmedString
 import com.fern.design.l0_system.UI
 import com.fern.design.l0_system.style
+import com.fern.design.utils.thenIf
 import com.fern.legacy.IvyWalletPreview
 import com.fern.legacy.data.model.AccountData
 import com.fern.legacy.utils.clickableNoIndication
@@ -54,6 +56,7 @@ import com.fern.wallet.ui.theme.Green
 import com.fern.wallet.ui.theme.GreenLight
 import com.fern.wallet.ui.theme.components.BalanceRow
 import com.fern.wallet.ui.theme.components.BalanceRowMini
+import com.fern.wallet.ui.theme.components.IvyIcon
 import com.fern.wallet.ui.theme.components.ItemIconSDefaultIcon
 import com.fern.wallet.ui.theme.components.ReorderButton
 import com.fern.wallet.ui.theme.components.ReorderModalSingleType
@@ -210,15 +213,19 @@ private fun AccountCard(
     onBalanceClick: () -> Unit,
     onClick: () -> Unit
 ) {
+    val modifier = Modifier
+        .padding(horizontal = 16.dp)
+        .fillMaxWidth()
+        .clip(UI.shapes.r4)
+        .border(2.dp, UI.colors.medium, UI.shapes.r4)
+        .thenIf(accountData.account.isArchived) {
+            alpha(0.5f)
+        }
+        .clickable(
+            onClick = onClick
+        )
     Column(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .clip(UI.shapes.r4)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
-            .clickable(
-                onClick = onClick
-            )
+        modifier = modifier
     ) {
         val account = accountData.account
         val contrastColor = findContrastTextColor(account.color.value.toComposeColor())
@@ -270,11 +277,18 @@ private fun AccountHeader(
         ) {
             Spacer(Modifier.width(20.dp))
 
-            ItemIconSDefaultIcon(
-                iconName = account.icon?.id,
-                defaultIcon = R.drawable.ic_custom_account_s,
-                tint = contrastColor
-            )
+            if (account.isArchived) {
+                IvyIcon(
+                    icon = R.drawable.ic_hide_m,
+                    tint = contrastColor
+                )
+            } else {
+                ItemIconSDefaultIcon(
+                    iconName = account.icon?.id,
+                    defaultIcon = R.drawable.ic_custom_account_s,
+                    tint = contrastColor
+                )
+            }
 
             Spacer(Modifier.width(8.dp))
 
