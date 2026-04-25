@@ -33,7 +33,7 @@ class AccountRepository @Inject constructor(
         }
     )
 
-    suspend fun findAll(includeArchived: Boolean = false): List<Account> = memo.findAll(
+    suspend fun findAll(includeArchived: Boolean = true): List<Account> = memo.findAll(
         findAllOperation = {
             val entities = if (includeArchived) {
                 accountDao.findAllWithArchived()

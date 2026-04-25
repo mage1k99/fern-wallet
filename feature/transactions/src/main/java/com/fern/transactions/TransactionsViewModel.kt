@@ -799,8 +799,9 @@ class TransactionsViewModel @Inject constructor(
     private fun toggleArchiveAccount(account: LegacyAccount) {
         viewModelScope.launch {
             val updatedAccount = account.copy(isArchived = !account.isArchived)
-            accountCreator.editAccount(updatedAccount, null) {
-                this@TransactionsViewModel.account.value = it
+            val currentBalance = ioThread { accountLogic.calculateAccountBalance(account) }
+            accountCreator.editAccount(updatedAccount, currentBalance) {
+                this@TransactionsViewModel.account.value = updatedAccount
             }
         }
     }
