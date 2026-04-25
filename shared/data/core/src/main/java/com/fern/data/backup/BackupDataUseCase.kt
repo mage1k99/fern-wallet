@@ -96,7 +96,7 @@ class BackupDataUseCase @Inject constructor(
 
     suspend fun generateJsonBackup(): String {
         return withContext(dispatchersProvider.io) {
-            val accounts = async { accountDao.findAll() }
+            val accounts = async { accountDao.findAllWithArchived() }
             val budgets = async { budgetDao.findAll() }
             val categories = async { categoryDao.findAll() }
             val loanRecords = async { loanRecordDao.findAll() }

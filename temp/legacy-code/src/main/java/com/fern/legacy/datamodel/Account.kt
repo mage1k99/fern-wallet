@@ -23,6 +23,7 @@ data class Account(
     val icon: String? = null,
     val orderNum: Double = 0.0,
     val includeInBalance: Boolean = true,
+    val isArchived: Boolean = false,
 
     val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
@@ -36,6 +37,7 @@ data class Account(
         icon = icon,
         orderNum = orderNum,
         includeInBalance = includeInBalance,
+        isArchived = isArchived,
         isSynced = isSynced,
         isDeleted = isDeleted,
         id = id
@@ -54,6 +56,7 @@ data class Account(
                 color = ColorInt(color),
                 icon = icon?.let(IconAsset::from)?.getOrNull(),
                 includeInBalance = includeInBalance,
+                isArchived = isArchived,
                 orderNum = orderNum,
             )
         }

@@ -27,6 +27,7 @@ class AccountMapper @Inject constructor(
             color = ColorInt(color),
             icon = icon?.let(IconAsset::from)?.getOrNull(),
             includeInBalance = includeInBalance,
+            isArchived = isArchived,
             orderNum = orderNum,
         )
     }
@@ -39,6 +40,7 @@ class AccountMapper @Inject constructor(
             icon = icon?.id,
             orderNum = orderNum,
             includeInBalance = includeInBalance,
+            isArchived = isArchived,
             id = id.value,
             isSynced = true, // TODO: Delete this
         )

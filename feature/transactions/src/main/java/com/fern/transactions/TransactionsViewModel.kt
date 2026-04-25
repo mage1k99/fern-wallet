@@ -312,6 +312,8 @@ class TransactionsViewModel @Inject constructor(
                 event.newBalance
             )
 
+            is TransactionsEvent.ToggleArchiveAccount -> toggleArchiveAccount(event.account)
+
             is TransactionsEvent.ToggleArchiveCategory -> toggleArchiveCategory(event.category)
             is TransactionsEvent.EditCategory -> editCategory(event.updatedCategory)
             is TransactionsEvent.NextMonth -> nextMonth(event.screen)
@@ -790,6 +792,16 @@ class TransactionsViewModel @Inject constructor(
                     timePeriod = period.value,
                     reset = false
                 )
+            }
+        }
+    }
+
+    private fun toggleArchiveAccount(account: LegacyAccount) {
+        viewModelScope.launch {
+            val updatedAccount = account.copy(isArchived = !account.isArchived)
+            val currentBalance = ioThread { accountLogic.calculateAccountBalance(account) }
+            accountCreator.editAccount(updatedAccount, currentBalance) {
+                this@TransactionsViewModel.account.value = updatedAccount
             }
         }
     }
