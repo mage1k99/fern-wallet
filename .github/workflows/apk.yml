@@ -16,11 +16,22 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: '18'
 
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Create google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
+
+      - name: Patch google-services.json for Demo flavor
+        run: sed -i 's/com.fern.wallet/com.fern.wallet.debug/g' app/google-services.json
+
+      - name: Generate Debug Keystore
+        run: |
+          rm -f debug.jks
+          keytool -genkeypair -v -keystore debug.jks -storepass "FERN1337" -alias debug -keypass "FERN1337" -keyalg RSA -keysize 2048 -validity 10000 -dname "cn=Debug, ou=Dev, o=Fern, c=US"
 
       - name: Build Demo APK
         run: ./gradlew assembleDemo
@@ -39,8 +50,8 @@ jobs:
           COMMIT_MESSAGE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}" | jq -r .commit.message | cut -c 1-100)
           CAPTION=$'Ivy Wallet Demo APK:\n\n'"$COMMIT_MESSAGE"$'\n... see commit at: '"$COMMIT_LINK"
           
-          curl -F "chat_id=-1001647280565" \
-               -F "document=@app/build/outputs/apk/demo/app-demo.apk" \
+          curl -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+               -F "message_thread_id=${{ secrets.TELEGRAM_TOPIC_ID }}" \               -F "document=@app/build/outputs/apk/demo/app-demo.apk" \
                -F "reply_to_message_id=16118" \
                -F "caption=$CAPTION" \
                https://api.telegram.org/bot${{ secrets.BOTFATHER_TELEGRAM_BOT_TOKEN }}/sendDocument
