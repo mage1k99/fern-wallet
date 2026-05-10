@@ -26,7 +26,9 @@ jobs:
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
 
       - name: Generate Debug Keystore
-        run: keytool -genkey -v -keystore debug.jks -storepass "FERN1337" -alias debug -keypass "FERN1337" -keyalg RSA -keysize 2048 -validity 10000 -dname "cn=Debug, ou=Dev, o=Fern, c=US"
+        run: |
+          rm -f debug.jks
+          keytool -genkeypair -v -keystore debug.jks -storepass "FERN1337" -alias debug -keypass "FERN1337" -keyalg RSA -keysize 2048 -validity 10000 -dname "cn=Debug, ou=Dev, o=Fern, c=US"
 
       - name: Build Demo APK
         run: ./gradlew assembleDemo
