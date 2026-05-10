@@ -200,7 +200,7 @@ class TransactionsViewModel @Inject constructor(
 
     @Composable
     private fun getAccounts(): ImmutableList<LegacyAccount> {
-        return accounts.value
+        return accounts.value.filter { !it.isArchived || it.id == account.value?.id }.toImmutableList()
     }
 
     @Composable

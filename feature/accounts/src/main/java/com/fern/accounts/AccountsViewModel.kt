@@ -59,6 +59,7 @@ class AccountsViewModel @Inject constructor(
     private var totalBalanceWithoutExcluded by mutableStateOf("")
     private var totalBalanceWithoutExcludedText by mutableStateOf("")
     private var reorderVisible by mutableStateOf(false)
+    private var showArchived by mutableStateOf(false)
 
     init {
         viewModelScope.launch {
@@ -90,9 +91,15 @@ class AccountsViewModel @Inject constructor(
             totalBalanceWithoutExcluded = getTotalBalanceWithoutExcluded(),
             totalBalanceWithoutExcludedText = getTotalBalanceWithoutExcludedText(),
             reorderVisible = getReorderVisible(),
+            showArchived = getShowArchived(),
             compactAccountsModeEnabled = getCompactAccountsMode(),
             hideTotalBalance = getHideTotalBalance()
         )
+    }
+
+    @Composable
+    private fun getShowArchived(): Boolean {
+        return showArchived
     }
 
     @Composable
@@ -107,7 +114,7 @@ class AccountsViewModel @Inject constructor(
 
     @Composable
     private fun getAccountsData(): ImmutableList<AccountData> {
-        return accountsData.toImmutableList()
+        return accountsData.filter { showArchived || !it.account.isArchived }.toImmutableList()
     }
 
     @Composable
@@ -145,6 +152,7 @@ class AccountsViewModel @Inject constructor(
             when (event) {
                 is AccountsEvent.OnReorder -> reorder(event.reorderedList)
                 is AccountsEvent.OnReorderModalVisible -> reorderModalVisible(event.reorderVisible)
+                AccountsEvent.OnToggleShowArchived -> showArchived = !showArchived
             }
         }
     }

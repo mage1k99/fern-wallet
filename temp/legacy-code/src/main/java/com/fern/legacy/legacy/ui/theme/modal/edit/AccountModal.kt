@@ -88,6 +88,9 @@ fun BoxWithConstraintsScope.AccountModal(
     var includeInBalance by remember(modal) {
         mutableStateOf(account?.includeInBalance ?: true)
     }
+    var isArchived by remember(modal) {
+        mutableStateOf(account?.isArchived ?: false)
+    }
 
     var amountModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
@@ -118,6 +121,7 @@ fun BoxWithConstraintsScope.AccountModal(
 
                     onCreateAccount = onCreateAccount,
                     onEditAccount = onEditAccount,
+                    isArchived = isArchived,
                     dismiss = dismiss
                 )
             }
@@ -188,6 +192,18 @@ fun BoxWithConstraintsScope.AccountModal(
                 ) {
                     includeInBalance = it
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                IvyCheckboxWithText(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .align(Alignment.Start),
+                    text = stringResource(R.string.archive),
+                    checked = isArchived
+                ) {
+                    isArchived = it
+                }
             },
             label = stringResource(R.string.enter_account_balance).uppercase(),
             currency = currencyCode,
@@ -224,6 +240,7 @@ fun BoxWithConstraintsScope.AccountModal(
 
                 onCreateAccount = onCreateAccount,
                 onEditAccount = onEditAccount,
+                isArchived = isArchived,
                 dismiss = dismiss
             )
         }
@@ -263,6 +280,7 @@ private fun save(
     icon: String?,
     amount: Double,
     includeInBalance: Boolean,
+    isArchived: Boolean,
 
     onCreateAccount: (CreateAccountData) -> Unit,
     onEditAccount: (Account, balance: Double) -> Unit,
@@ -274,6 +292,7 @@ private fun save(
                 name = nameTextFieldValue.text.trim(),
                 currency = currency,
                 includeInBalance = includeInBalance,
+                isArchived = isArchived,
                 icon = icon,
                 color = color.toArgb()
             ),
@@ -287,7 +306,8 @@ private fun save(
                 color = color,
                 icon = icon,
                 balance = amount,
-                includeBalance = includeInBalance
+                includeBalance = includeInBalance,
+                isArchived = isArchived
             )
         )
     }

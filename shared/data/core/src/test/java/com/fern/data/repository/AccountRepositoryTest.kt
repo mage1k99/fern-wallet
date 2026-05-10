@@ -73,6 +73,7 @@ class AccountRepositoryTest {
             icon = null,
             orderNum = 1.0,
             includeInBalance = true,
+            isArchived = false,
             isSynced = true,
             isDeleted = false,
             id = accountId.value
@@ -89,6 +90,7 @@ class AccountRepositoryTest {
             color = ColorInt(1),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 1.0,
         )
     }
@@ -104,6 +106,7 @@ class AccountRepositoryTest {
             icon = null,
             orderNum = 2.0,
             includeInBalance = true,
+            isArchived = false,
             isSynced = true,
             isDeleted = false,
             id = accountId.value
@@ -141,6 +144,7 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 1.0,
                 includeInBalance = true,
+                isArchived = false,
                 isSynced = true,
                 isDeleted = false,
                 id = account1Id.value
@@ -152,6 +156,7 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 2.0,
                 includeInBalance = true,
+                isArchived = false,
                 isSynced = true,
                 isDeleted = false,
                 id = account2Id.value
@@ -170,6 +175,7 @@ class AccountRepositoryTest {
                 color = ColorInt(1),
                 icon = null,
                 includeInBalance = true,
+                isArchived = false,
                 orderNum = 1.0,
             ),
             Account(
@@ -179,6 +185,7 @@ class AccountRepositoryTest {
                 color = ColorInt(2),
                 icon = null,
                 includeInBalance = true,
+                isArchived = false,
                 orderNum = 2.0,
             )
         )
@@ -197,6 +204,7 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 1.0,
                 includeInBalance = true,
+                isArchived = false,
                 isSynced = true,
                 isDeleted = false,
                 id = account1Id.value
@@ -208,6 +216,7 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 2.0,
                 includeInBalance = true,
+                isArchived = false,
                 isSynced = true,
                 isDeleted = false,
                 id = account2Id.value
@@ -226,6 +235,7 @@ class AccountRepositoryTest {
                 color = ColorInt(1),
                 icon = null,
                 includeInBalance = true,
+                isArchived = false,
                 orderNum = 1.0,
             )
         )
@@ -267,6 +277,7 @@ class AccountRepositoryTest {
             color = ColorInt(1),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 1.0,
         )
 
@@ -283,6 +294,7 @@ class AccountRepositoryTest {
                     icon = null,
                     orderNum = 1.0,
                     includeInBalance = true,
+                    isArchived = false,
                     isSynced = true,
                     isDeleted = false,
                     id = accountId.value
@@ -305,6 +317,7 @@ class AccountRepositoryTest {
                 color = ColorInt(1),
                 icon = null,
                 includeInBalance = true,
+                isArchived = false,
                 orderNum = 1.0,
             ),
             Account(
@@ -314,6 +327,7 @@ class AccountRepositoryTest {
                 color = ColorInt(2),
                 icon = null,
                 includeInBalance = true,
+                isArchived = false,
                 orderNum = 2.0,
             )
         )
@@ -332,6 +346,7 @@ class AccountRepositoryTest {
                         icon = null,
                         orderNum = 1.0,
                         includeInBalance = true,
+                        isArchived = false,
                         isSynced = true,
                         isDeleted = false,
                         id = account1Id.value
@@ -343,6 +358,7 @@ class AccountRepositoryTest {
                         icon = null,
                         orderNum = 2.0,
                         includeInBalance = true,
+                        isArchived = false,
                         isSynced = true,
                         isDeleted = false,
                         id = account2Id.value

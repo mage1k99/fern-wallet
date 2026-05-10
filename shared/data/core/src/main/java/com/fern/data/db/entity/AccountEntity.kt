@@ -1,6 +1,7 @@
 package com.fern.data.db.entity
 
 import androidx.annotation.Keep
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fern.base.kotlinxserilzation.KSerializerUUID
@@ -25,6 +26,9 @@ data class AccountEntity(
     val orderNum: Double = 0.0,
     @SerialName("includeInBalance")
     val includeInBalance: Boolean = true,
+    @ColumnInfo(defaultValue = "0")
+    @SerialName("isArchived")
+    val isArchived: Boolean = false,
 
     @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
     @SerialName("isSynced")
