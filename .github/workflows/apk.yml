@@ -25,6 +25,9 @@ jobs:
       - name: Create google-services.json
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
 
+      - name: Patch google-services.json for Demo flavor
+        run: sed -i 's/com.fern.wallet/com.fern.wallet.debug/g' app/google-services.json
+
       - name: Generate Debug Keystore
         run: |
           rm -f debug.jks

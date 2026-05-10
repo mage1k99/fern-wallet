@@ -16,7 +16,7 @@ jobs:
       - name: Setup Java SDK
         uses: actions/setup-java@v4
       - name: Create mock google-services.json
-        run: echo "{\"project_info\":{\"project_number\":\"0\",\"project_id\":\"mock\"},\"client\":[{\"client_info\":{\"mobilesdk_app_id\":\"mock\",\"android_client_info\":{\"package_name\":\"com.fern.wallet\"}},\"api_key\":[{\"current_key\":\"mock\"}]}]}" > app/google-services.json
+        run: echo "{\"project_info\":{\"project_number\":\"0\",\"project_id\":\"mock\"},\"client\":[{\"client_info\":{\"mobilesdk_app_id\":\"mock\",\"android_client_info\":{\"package_name\":\"com.fern.wallet.debug\"}},\"api_key\":[{\"current_key\":\"mock\"}]}]}" > app/google-services.json
         with:
           distribution: 'temurin'
           java-version: '18'
@@ -37,7 +37,7 @@ jobs:
 #      - name: Setup Java SDK
 #        uses: actions/setup-java@v4
       - name: Create mock google-services.json
-        run: echo "{\"project_info\":{\"project_number\":\"0\",\"project_id\":\"mock\"},\"client\":[{\"client_info\":{\"mobilesdk_app_id\":\"mock\",\"android_client_info\":{\"package_name\":\"com.fern.wallet\"}},\"api_key\":[{\"current_key\":\"mock\"}]}]}" > app/google-services.json
+        run: echo "{\"project_info\":{\"project_number\":\"0\",\"project_id\":\"mock\"},\"client\":[{\"client_info\":{\"mobilesdk_app_id\":\"mock\",\"android_client_info\":{\"package_name\":\"com.fern.wallet.debug\"}},\"api_key\":[{\"current_key\":\"mock\"}]}]}" > app/google-services.json
 #        with:
 #          distribution: 'temurin'
 #          java-version: '18'
