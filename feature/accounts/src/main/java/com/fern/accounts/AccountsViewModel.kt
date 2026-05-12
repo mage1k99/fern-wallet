@@ -59,7 +59,7 @@ class AccountsViewModel @Inject constructor(
     private var totalBalanceWithoutExcluded by mutableStateOf("")
     private var totalBalanceWithoutExcludedText by mutableStateOf("")
     private var reorderVisible by mutableStateOf(false)
-    private var showArchived by mutableStateOf(false)
+    private var showArchived by mutableStateOf(sharedPrefs.getBoolean(SharedPrefs.SHOW_ARCHIVED_ACCOUNTS, false))
 
     init {
         viewModelScope.launch {
@@ -148,11 +148,14 @@ class AccountsViewModel @Inject constructor(
     }
 
     override fun onEvent(event: AccountsEvent) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             when (event) {
                 is AccountsEvent.OnReorder -> reorder(event.reorderedList)
                 is AccountsEvent.OnReorderModalVisible -> reorderModalVisible(event.reorderVisible)
-                AccountsEvent.OnToggleShowArchived -> showArchived = !showArchived
+                AccountsEvent.OnToggleShowArchived -> {
+                    showArchived = !showArchived
+                    sharedPrefs.putBoolean(SharedPrefs.SHOW_ARCHIVED_ACCOUNTS, showArchived)
+                }
             }
         }
     }

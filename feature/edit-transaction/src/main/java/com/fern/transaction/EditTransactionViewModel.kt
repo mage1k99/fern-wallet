@@ -259,7 +259,9 @@ class EditTransactionViewModel @Inject constructor(
 
     @Composable
     private fun getCategories(): ImmutableList<Category> {
-        return categories
+        return categories.filter {
+            !it.isArchived || it.id == category?.id
+        }.toImmutableList()
     }
 
     @Composable
@@ -353,7 +355,7 @@ class EditTransactionViewModel @Inject constructor(
         }
     }
 
-    private suspend fun defaultAccountId(
+    private fun defaultAccountId(
         screen: EditTransactionScreen,
         accounts: List<Account>,
     ): UUID {
@@ -365,17 +367,15 @@ class EditTransactionViewModel @Inject constructor(
             SharedPrefs.LAST_SELECTED_ACCOUNT_ID,
             null
         )?.let { UUID.fromString(it) }
-        if (lastSelectedId != null && ioThread {
-                accounts.find {
-                    it.id == lastSelectedId
-                }
-            } != null
-        ) {
-            // use last selected account
-            return lastSelectedId
+
+        if (lastSelectedId != null) {
+            val lastSelectedAccount = accounts.find { it.id == lastSelectedId }
+            if (lastSelectedAccount != null && !lastSelectedAccount.isArchived) {
+                return lastSelectedId
+            }
         }
 
-        return accounts.first().id
+        return accounts.firstOrNull { !it.isArchived }?.id ?: accounts.first().id
     }
 
     private suspend fun display(transaction: Transaction) {
