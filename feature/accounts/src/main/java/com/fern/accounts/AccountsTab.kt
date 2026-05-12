@@ -219,6 +219,9 @@ private fun AccountCard(
             .clickable(
                 onClick = onClick
             )
+            .thenIf(accountData.account.isArchived) {
+                Modifier.alpha(0.5f)
+            }
     ) {
         val account = accountData.account
         val contrastColor = findContrastTextColor(account.color.value.toComposeColor())
@@ -271,7 +274,7 @@ private fun AccountHeader(
             Spacer(Modifier.width(20.dp))
 
             ItemIconSDefaultIcon(
-                iconName = account.icon?.id,
+                iconName = if (account.isArchived) "ic_hide_m" else account.icon?.id,
                 defaultIcon = R.drawable.ic_custom_account_s,
                 tint = contrastColor
             )

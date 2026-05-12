@@ -181,6 +181,9 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onEditAccount = { acc, newBalance ->
             viewModel.onEvent(TransactionsEvent.EditAccount(screen, acc, newBalance))
         },
+        onToggleArchiveAccount = {
+            viewModel.onEvent(TransactionsEvent.ToggleArchiveAccount(it))
+        },
         onPayOrGet = { transaction ->
             viewModel.onEvent(TransactionsEvent.PayOrGet(screen, transaction))
         },
@@ -243,6 +246,7 @@ private fun BoxWithConstraintsScope.UI(
     onEditAccount: (Account, Double) -> Unit,
     onEditCategory: (Category) -> Unit,
     onToggleArchiveCategory: (Category) -> Unit,
+    onToggleArchiveAccount: (Account) -> Unit = {},
     onDelete: () -> Unit,
     deleteModal1Visible: Boolean,
     onDeleteModal1Visible: (Boolean) -> Unit,
@@ -327,8 +331,11 @@ private fun BoxWithConstraintsScope.UI(
                         onDeleteModal1Visible(true)
                     },
                     onArchive = {
-                        if (category != null) {
-                            onToggleArchiveCategory(category)
+                        category?.let {
+                            onToggleArchiveCategory(it)
+                        }
+                        account?.let {
+                            onToggleArchiveAccount(it)
                         }
                     },
                     onEdit = {
@@ -633,8 +640,8 @@ private fun Header(
             onEdit = onEdit,
             onDelete = onDelete,
             onArchive = onArchive,
-            showArchiveButton = category != null,
-            isArchived = category?.isArchived ?: false,
+            showArchiveButton = true,
+            isArchived = category?.isArchived ?: account?.isArchived ?: false,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,
             showDeleteButton = hideEditAndDeleteButtonForAccountTransfer,
         )
