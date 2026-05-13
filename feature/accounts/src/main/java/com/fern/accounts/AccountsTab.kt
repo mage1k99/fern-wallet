@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -50,11 +52,15 @@ import com.fern.navigation.navigation
 import com.fern.navigation.screenScopedViewModel
 import com.fern.ui.R
 import com.fern.ui.rememberScrollPositionListState
+import com.fern.wallet.ui.theme.Gradient
+import com.fern.wallet.ui.theme.GradientIvy
 import com.fern.wallet.ui.theme.Green
 import com.fern.wallet.ui.theme.GreenLight
+import com.fern.wallet.ui.theme.White
 import com.fern.wallet.ui.theme.components.BalanceRow
 import com.fern.wallet.ui.theme.components.BalanceRowMini
 import com.fern.wallet.ui.theme.components.ItemIconSDefaultIcon
+import com.fern.wallet.ui.theme.components.IvyCircleButton
 import com.fern.wallet.ui.theme.components.ReorderButton
 import com.fern.wallet.ui.theme.components.ReorderModalSingleType
 import com.fern.wallet.ui.theme.dynamicContrast
@@ -126,6 +132,19 @@ private fun BoxWithConstraintsScope.UI(
                 }
 
                 Spacer(Modifier.weight(1f))
+
+                IvyCircleButton(
+                    modifier = Modifier
+                        .size(48.dp),
+                    icon = if (state.showArchived) R.drawable.ic_visible else R.drawable.ic_hidden,
+                    backgroundGradient = if (state.showArchived) GradientIvy else Gradient.solid(UI.colors.gray),
+                    tint = White,
+                    onClick = {
+                        onEvent(AccountsEvent.OnToggleShowArchived)
+                    }
+                )
+
+                Spacer(Modifier.width(8.dp))
 
                 ReorderButton {
                     onEvent(
@@ -214,6 +233,7 @@ private fun AccountCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
+            .alpha(if (accountData.account.isArchived) 0.5f else 1f)
             .clip(UI.shapes.r4)
             .border(2.dp, UI.colors.medium, UI.shapes.r4)
             .clickable(
@@ -346,6 +366,7 @@ private fun PreviewAccountsTabCompactModeDisabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -356,6 +377,7 @@ private fun PreviewAccountsTabCompactModeDisabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -366,6 +388,7 @@ private fun PreviewAccountsTabCompactModeDisabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = IconAsset.unsafe("revolut"),
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -376,6 +399,7 @@ private fun PreviewAccountsTabCompactModeDisabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = IconAsset.unsafe("cash"),
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
         val state = AccountsState(
@@ -415,6 +439,7 @@ private fun PreviewAccountsTabCompactModeDisabled(theme: Theme = Theme.LIGHT) {
             totalBalanceWithoutExcluded = "25.54",
             totalBalanceWithoutExcludedText = "BGN 25.54",
             reorderVisible = false,
+            showArchived = false,
             compactAccountsModeEnabled = false,
             hideTotalBalance = false
         )
@@ -433,6 +458,7 @@ private fun PreviewAccountsTabCompactModeEnabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -443,6 +469,7 @@ private fun PreviewAccountsTabCompactModeEnabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = null,
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -453,6 +480,7 @@ private fun PreviewAccountsTabCompactModeEnabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = IconAsset.unsafe("revolut"),
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
 
@@ -463,6 +491,7 @@ private fun PreviewAccountsTabCompactModeEnabled(theme: Theme = Theme.LIGHT) {
             asset = AssetCode.unsafe("USD"),
             icon = IconAsset.unsafe("cash"),
             includeInBalance = true,
+            isArchived = false,
             orderNum = 0.0,
         )
         val state = AccountsState(
@@ -502,6 +531,7 @@ private fun PreviewAccountsTabCompactModeEnabled(theme: Theme = Theme.LIGHT) {
             totalBalanceWithoutExcluded = "25.54",
             totalBalanceWithoutExcludedText = "BGN 25.54",
             reorderVisible = false,
+            showArchived = false,
             compactAccountsModeEnabled = true,
             hideTotalBalance = false
         )

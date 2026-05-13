@@ -296,7 +296,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
             Spacer(Modifier.height(16.dp))
 
             AccountsRow(
-                accounts = accounts,
+                accounts = accounts.filter { !it.isArchived || it.id == selectedAccount?.id },
                 selectedAccount = selectedAccount,
                 onSelectedAccountChanged = onSelectedAccountChanged,
                 onAddNewAccount = onAddNewAccount,

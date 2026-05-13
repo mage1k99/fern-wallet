@@ -2,6 +2,8 @@ name: PR description check
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:
 
 jobs:
   pr-description-check:

@@ -46,6 +46,7 @@ class AccountMapperTest {
             color = ColorInt(value = 42),
             icon = IconAsset.unsafe("icon"),
             includeInBalance = includeInBalance,
+            isArchived = false,
             orderNum = 3.14,
         )
 
@@ -59,6 +60,7 @@ class AccountMapperTest {
             color = 42,
             icon = "icon",
             includeInBalance = includeInBalance,
+            isArchived = false,
             orderNum = 3.14,
             isSynced = true,
             isDeleted = false,
@@ -74,6 +76,7 @@ class AccountMapperTest {
     ) = runTest {
         // given
         val entity = ValidEntity.copy(
+            isArchived = false,
             orderNum = 42.0,
             includeInBalance = includeInBalance,
             isDeleted = removed,
@@ -93,6 +96,7 @@ class AccountMapperTest {
                 color = ColorInt(value = 42),
                 icon = IconAsset.unsafe("icon"),
                 includeInBalance = includeInBalance,
+                isArchived = false,
                 orderNum = 42.0,
             )
         }
@@ -156,6 +160,7 @@ class AccountMapperTest {
             icon = "icon",
             includeInBalance = true,
             isSynced = true,
+            isArchived = false,
             isDeleted = false,
             id = UUID.randomUUID(),
         )

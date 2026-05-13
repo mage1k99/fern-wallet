@@ -30,7 +30,7 @@ class CalcWalletBalanceAct @Inject constructor(
 
     private suspend fun Input.recipe(): suspend (Unit) -> BigDecimal =
         accountsAct thenFilter {
-            withExcluded || it.includeInBalance
+            (withExcluded || it.includeInBalance) && !it.isArchived
         } thenMap { account ->
             calcAccBalanceAct(
                 CalcAccBalanceAct.Input(
@@ -44,6 +44,7 @@ class CalcWalletBalanceAct @Inject constructor(
                         icon = account.icon?.let { IconAsset.from(it).getOrNull() },
                         includeInBalance = account.includeInBalance,
                         orderNum = account.orderNum,
+                        isArchived = account.isArchived,
                     ),
                     range = range
                 )

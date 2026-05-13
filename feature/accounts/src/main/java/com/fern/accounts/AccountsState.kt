@@ -13,6 +13,7 @@ data class AccountsState(
     val totalBalanceWithoutExcluded: String,
     val totalBalanceWithoutExcludedText: String,
     val reorderVisible: Boolean,
+    val showArchived: Boolean,
     val compactAccountsModeEnabled: Boolean,
     val hideTotalBalance: Boolean,
 )

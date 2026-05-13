@@ -135,6 +135,7 @@
     <string name="category_confirm_deletion_description">Note: Deleting this category will remove it permanently.</string>
     <string name="account_confirm_deletion_type_account_name">Type \"%s\" to delete your account</string>
     <string name="edit">Edit</string>
+    <string name="archive">Archive</string>
     <string name="transactions">transactions</string>
     <string name="home">Home</string>
     <string name="add_planned_payment">Add planned payment</string>

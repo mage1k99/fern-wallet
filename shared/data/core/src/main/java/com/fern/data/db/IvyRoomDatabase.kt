@@ -77,9 +77,10 @@ import com.fern.domain.db.migration.Migration125to126_Tags
             from = 121,
             to = 122,
             spec = IvyRoomDatabase.DeleteSEMigration::class
-        )
+        ),
+        AutoMigration(from = 131, to = 132)
     ],
-    version = 131,
+    version = 132,
     exportSchema = true
 )
 @TypeConverters(RoomTypeConverters::class)

@@ -39,6 +39,7 @@ class AccountCreator @Inject constructor(
                     color = ColorInt(data.color.toArgb()),
                     icon = data.icon?.let(IconAsset::from)?.getOrNull(),
                     includeInBalance = data.includeBalance,
+                    isArchived = data.isArchived,
                     orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
                 )
             }.getOrNull() ?: return@ioThread
@@ -50,6 +51,7 @@ class AccountCreator @Inject constructor(
                 color = data.color.toArgb(),
                 icon = data.icon,
                 includeInBalance = data.includeBalance,
+                isArchived = data.isArchived,
                 orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
                 isSynced = false,
                 id = account.id.value

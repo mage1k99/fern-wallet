@@ -119,12 +119,16 @@ class EditPlannedViewModel @Inject constructor(
 
     @Composable
     private fun getCategories(): ImmutableList<Category> {
-        return categories
+        return categories.filter {
+            !it.isArchived || it.id == category?.id
+        }.toImmutableList()
     }
 
     @Composable
     private fun getAccounts(): ImmutableList<Account> {
-        return accounts
+        return accounts.filter {
+            !it.isArchived || it.id == account?.id
+        }.toImmutableList()
     }
 
     @Composable

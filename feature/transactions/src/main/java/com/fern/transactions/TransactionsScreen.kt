@@ -329,6 +329,11 @@ private fun BoxWithConstraintsScope.UI(
                     onArchive = {
                         if (category != null) {
                             onToggleArchiveCategory(category)
+                        } else if (account != null) {
+                            onEditAccount(
+                                account.copy(isArchived = !account.isArchived),
+                                balance
+                            )
                         }
                     },
                     onEdit = {
@@ -633,8 +638,8 @@ private fun Header(
             onEdit = onEdit,
             onDelete = onDelete,
             onArchive = onArchive,
-            showArchiveButton = category != null,
-            isArchived = category?.isArchived ?: false,
+            showArchiveButton = category != null || account != null,
+            isArchived = category?.isArchived ?: account?.isArchived ?: false,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,
             showDeleteButton = hideEditAndDeleteButtonForAccountTransfer,
         )
@@ -769,7 +774,7 @@ private fun Item(
         when {
             account != null -> {
                 ItemIconMDefaultIcon(
-                    iconName = account.icon,
+                    iconName = if (account.isArchived) "hide" else account.icon,
                     defaultIcon = R.drawable.ic_custom_account_m,
                     tint = contrastColor
                 )
