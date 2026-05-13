@@ -253,7 +253,7 @@ class EditTransactionViewModel @Inject constructor(
     @Composable
     private fun getAccounts(): ImmutableList<Account> {
         return accounts.filter {
-            !it.isArchived || it.id == account?.id || it.id == toAccount?.id
+            (!it.isArchived || it.id == account?.id || it.id == toAccount?.id)
         }.toImmutableList()
     }
 
